@@ -11,7 +11,6 @@ import { AbsContext } from "./CalculatorParser";
 import { RoundkContext } from "./CalculatorParser";
 import { RoundContext } from "./CalculatorParser";
 import { TruncContext } from "./CalculatorParser";
-import { StringTokensContext } from "./CalculatorParser";
 import { SinContext } from "./CalculatorParser";
 import { CosContext } from "./CalculatorParser";
 import { TanContext } from "./CalculatorParser";
@@ -125,14 +124,6 @@ export interface CalculatorVisitor<Result> extends ParseTreeVisitor<Result> {
 	 * @return the visitor result
 	 */
 	visitTrunc?: (ctx: TruncContext) => Result;
-
-	/**
-	 * Visit a parse tree produced by the `StringTokens`
-	 * labeled alternative in `CalculatorParser.expression`.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	visitStringTokens?: (ctx: StringTokensContext) => Result;
 
 	/**
 	 * Visit a parse tree produced by the `Sin`

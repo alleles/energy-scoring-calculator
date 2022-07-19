@@ -11,7 +11,6 @@ import { AbsContext } from "./CalculatorParser";
 import { RoundkContext } from "./CalculatorParser";
 import { RoundContext } from "./CalculatorParser";
 import { TruncContext } from "./CalculatorParser";
-import { StringTokensContext } from "./CalculatorParser";
 import { SinContext } from "./CalculatorParser";
 import { CosContext } from "./CalculatorParser";
 import { TanContext } from "./CalculatorParser";
@@ -162,19 +161,6 @@ export interface CalculatorListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitTrunc?: (ctx: TruncContext) => void;
-
-	/**
-	 * Enter a parse tree produced by the `StringTokens`
-	 * labeled alternative in `CalculatorParser.expression`.
-	 * @param ctx the parse tree
-	 */
-	enterStringTokens?: (ctx: StringTokensContext) => void;
-	/**
-	 * Exit a parse tree produced by the `StringTokens`
-	 * labeled alternative in `CalculatorParser.expression`.
-	 * @param ctx the parse tree
-	 */
-	exitStringTokens?: (ctx: StringTokensContext) => void;
 
 	/**
 	 * Enter a parse tree produced by the `Sin`
