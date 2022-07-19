@@ -24,6 +24,7 @@ import { FormulaErrorListener } from "./FormulaErrorListener";
 import { LnContext } from "./GeneratedAntlr/CalculatorParser";
 import { LogContext } from "./GeneratedAntlr/CalculatorParser";
 import { ModContext } from "./GeneratedAntlr/CalculatorParser";
+import { StringTokensContext } from "./GeneratedAntlr/CalculatorParser";
 import { MulDivContext } from "./GeneratedAntlr/CalculatorParser";
 import { MultContext } from "./GeneratedAntlr/CalculatorParser";
 import { NegExponentContext } from "./GeneratedAntlr/CalculatorParser";
@@ -195,6 +196,13 @@ export class FormulaVisitor extends AbstractParseTreeVisitor<number> implements 
     // Visit a parse tree produced by calculatorParser#Number.
     visitNumber(context: NumberContext): number {
         return Number(context.text.replace(',', '.'));
+    };
+
+    // Visit a parse tree produced by calculatorParser#Sinh.
+    visitStringTokens(context: StringTokensContext): number {
+        console.log('string token context:', context.text);
+        console.log('this.visitExpression(context.expression())', this.visitExpression(context.expression()).toString());
+        return this.visitExpression(context.expression())
     };
 
     // Visit a parse tree produced by calculatorParser#Sinh.

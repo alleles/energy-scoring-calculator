@@ -30,6 +30,7 @@ expression:
 	| ROUNDK '(' expression ';' expression ')'					# Roundk // Round expr_1 with expr_2 accuracy
 	| ROUND expression											# Round // Round with zero accuracy
 	| TRUNC expression											# Trunc // Trim decimal digits
+	| STRING_TOKENS expression                                  # StringTokens
 	| SIN expression											# Sin // Sinus
 	| COS expression											# Cos // Cosinus
 	| TAN expression											# Tan // Tangens
@@ -75,7 +76,10 @@ compileUnit: EOF;
 /*
  * Lexer Rules
  */
-
+STRING_TOKENS: TOTAL_KWH | BEHAVIORAL_KWH | MOVING_AVERAGE;
+BEHAVIORAL_KWH: [Bb][Ee][Hh][Aa][Vv][Ii][Oo][Rr][Aa][Ll]'_'[Kk][Ww][Hh];
+TOTAL_KWH: [Tt][Oo][Tt][Tt][Aa][Ll]'_'[Kk][Ww][Hh];
+MOVING_AVERAGE: [Mm][Aa] | [Mm][Oo][Vv][Ii][Nn][Gg]'_'[Aa][Vv][Ee][Rr][Aa][Gg][Ee];
 NUMBER: FLOAT | DIGIT+;
 FLOAT: DIGIT+ (',' | '.') DIGIT* | (',' | '.') DIGIT+;
 DIGIT: [0-9];
