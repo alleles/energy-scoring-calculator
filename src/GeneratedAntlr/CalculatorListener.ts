@@ -11,7 +11,6 @@ import { AbsContext } from "./CalculatorParser";
 import { RoundkContext } from "./CalculatorParser";
 import { RoundContext } from "./CalculatorParser";
 import { TruncContext } from "./CalculatorParser";
-import { StringTokensContext } from "./CalculatorParser";
 import { SinContext } from "./CalculatorParser";
 import { CosContext } from "./CalculatorParser";
 import { TanContext } from "./CalculatorParser";
@@ -44,6 +43,8 @@ import { MultContext } from "./CalculatorParser";
 import { MinContext } from "./CalculatorParser";
 import { MaxContext } from "./CalculatorParser";
 import { AddSubContext } from "./CalculatorParser";
+import { StringExpressionContext } from "./CalculatorParser";
+import { StringTokenContext } from "./CalculatorParser";
 import { NumberContext } from "./CalculatorParser";
 import { PiContext } from "./CalculatorParser";
 import { EulerContext } from "./CalculatorParser";
@@ -162,19 +163,6 @@ export interface CalculatorListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitTrunc?: (ctx: TruncContext) => void;
-
-	/**
-	 * Enter a parse tree produced by the `StringTokens`
-	 * labeled alternative in `CalculatorParser.expression`.
-	 * @param ctx the parse tree
-	 */
-	enterStringTokens?: (ctx: StringTokensContext) => void;
-	/**
-	 * Exit a parse tree produced by the `StringTokens`
-	 * labeled alternative in `CalculatorParser.expression`.
-	 * @param ctx the parse tree
-	 */
-	exitStringTokens?: (ctx: StringTokensContext) => void;
 
 	/**
 	 * Enter a parse tree produced by the `Sin`
@@ -591,6 +579,32 @@ export interface CalculatorListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitAddSub?: (ctx: AddSubContext) => void;
+
+	/**
+	 * Enter a parse tree produced by the `StringExpression`
+	 * labeled alternative in `CalculatorParser.expression`.
+	 * @param ctx the parse tree
+	 */
+	enterStringExpression?: (ctx: StringExpressionContext) => void;
+	/**
+	 * Exit a parse tree produced by the `StringExpression`
+	 * labeled alternative in `CalculatorParser.expression`.
+	 * @param ctx the parse tree
+	 */
+	exitStringExpression?: (ctx: StringExpressionContext) => void;
+
+	/**
+	 * Enter a parse tree produced by the `StringToken`
+	 * labeled alternative in `CalculatorParser.expression`.
+	 * @param ctx the parse tree
+	 */
+	enterStringToken?: (ctx: StringTokenContext) => void;
+	/**
+	 * Exit a parse tree produced by the `StringToken`
+	 * labeled alternative in `CalculatorParser.expression`.
+	 * @param ctx the parse tree
+	 */
+	exitStringToken?: (ctx: StringTokenContext) => void;
 
 	/**
 	 * Enter a parse tree produced by the `Number`

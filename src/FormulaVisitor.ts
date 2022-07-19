@@ -24,7 +24,8 @@ import { FormulaErrorListener } from "./FormulaErrorListener";
 import { LnContext } from "./GeneratedAntlr/CalculatorParser";
 import { LogContext } from "./GeneratedAntlr/CalculatorParser";
 import { ModContext } from "./GeneratedAntlr/CalculatorParser";
-import { StringTokensContext } from "./GeneratedAntlr/CalculatorParser";
+import { StringExpressionContext } from "./GeneratedAntlr/CalculatorParser";
+import { StringTokenContext } from "./GeneratedAntlr/CalculatorParser";
 import { MulDivContext } from "./GeneratedAntlr/CalculatorParser";
 import { MultContext } from "./GeneratedAntlr/CalculatorParser";
 import { NegExponentContext } from "./GeneratedAntlr/CalculatorParser";
@@ -47,7 +48,7 @@ import { UnaryContext } from "./GeneratedAntlr/CalculatorParser";
 import { UnaryPlusContext } from "./GeneratedAntlr/CalculatorParser";
 import { WholeContext } from "./GeneratedAntlr/CalculatorParser";
 
-export class FormulaVisitor extends AbstractParseTreeVisitor<number> implements CalculatorVisitor<number> {
+export class FormulaVisitor extends AbstractParseTreeVisitor<number> implements CalculatorVisitor<number | string> {
 
     protected defaultResult(): number {
         return 0;
@@ -70,7 +71,7 @@ export class FormulaVisitor extends AbstractParseTreeVisitor<number> implements 
     }
 
     // Visit a parse tree produced by calculatorParser#calculator.
-    visitCalculator(context: CalculatorContext): number {
+    visitCalculator(context: CalculatorContext): number | string {
         return context.expression().accept(this);
     };
 
@@ -198,11 +199,18 @@ export class FormulaVisitor extends AbstractParseTreeVisitor<number> implements 
         return Number(context.text.replace(',', '.'));
     };
 
-    // Visit a parse tree produced by calculatorParser#Sinh.
-    visitStringTokens(context: StringTokensContext): number {
+    // Visit a parse tree produced by calculatorParser#StringExpressionContext.
+    visitStringTokenExpression(context: StringExpressionContext): string {
+        const expression0 = this.visitExpression(context.expression(0));
+        const expression1 = this.visitExpression(context.expression(1));
+        const expression2 = this.visitExpression(context.expression(0));
+        return `${expression0} ${expression1} ${expression2}`;
+    }
+
+    // Visit a parse tree produced by calculatorParser#StringToken.
+    visitStringToken(context: StringTokenContext): string {
         console.log('string token context:', context.text);
-        console.log('this.visitExpression(context.expression())', this.visitExpression(context.expression()).toString());
-        return this.visitExpression(context.expression())
+        return context.text
     };
 
     // Visit a parse tree produced by calculatorParser#Sinh.

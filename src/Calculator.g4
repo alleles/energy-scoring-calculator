@@ -30,7 +30,6 @@ expression:
 	| ROUNDK '(' expression ';' expression ')'					# Roundk // Round expr_1 with expr_2 accuracy
 	| ROUND expression											# Round // Round with zero accuracy
 	| TRUNC expression											# Trunc // Trim decimal digits
-	| STRING_TOKENS expression                                  # StringTokens
 	| SIN expression											# Sin // Sinus
 	| COS expression											# Cos // Cosinus
 	| TAN expression											# Tan // Tangens
@@ -64,6 +63,8 @@ expression:
 	| MIN '(' expr += expression (';' expr += expression)* ')'	# Min // Minimum
 	| MAX '(' expr += expression (';' expr += expression)* ')'	# Max // Maximum
 	| expression op = (ADD | SUB) expression					# AddSub // Addition or subtraction
+	| expression STRING_EXPRESSION expression                   # StringExpression // String expression
+    | STRING_TOKEN                                              # StringToken
 	| NUMBER													# Number // Single integer or float number
 	| PI '()'?													# Pi // Mathematical constant pi = 3,141593
 	| EULER														# Euler // Mathematical constant e = 2,718282
@@ -76,10 +77,8 @@ compileUnit: EOF;
 /*
  * Lexer Rules
  */
-STRING_TOKENS: TOTAL_KWH | BEHAVIORAL_KWH | MOVING_AVERAGE;
-BEHAVIORAL_KWH: [Bb][Ee][Hh][Aa][Vv][Ii][Oo][Rr][Aa][Ll]'_'[Kk][Ww][Hh];
-TOTAL_KWH: [Tt][Oo][Tt][Tt][Aa][Ll]'_'[Kk][Ww][Hh];
-MOVING_AVERAGE: [Mm][Aa] | [Mm][Oo][Vv][Ii][Nn][Gg]'_'[Aa][Vv][Ee][Rr][Aa][Gg][Ee];
+
+STRING_TOKEN: ([a-z] | [A-Z] | [äÄöÖüÜ] | [0-9])+;
 NUMBER: FLOAT | DIGIT+;
 FLOAT: DIGIT+ (',' | '.') DIGIT* | (',' | '.') DIGIT+;
 DIGIT: [0-9];

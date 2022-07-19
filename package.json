@@ -2,7 +2,7 @@
   "name": "antlr-calculator",
   "version": "1.0.5",
   "license": "MIT",
-  "main": "./index.js",
+  "main": "./dist/index.js",
   "types": "./index.d.ts",
   "repository": {
     "type": "git",
@@ -14,7 +14,11 @@
     "tsc": "tsc",
     "test": "karma start karma.conf.js",
     "test:ci": "karma start karma.conf.ci.js",
-    "antlr4ts": "antlr4ts -visitor -o ./src/GeneratedAntlr ./src/Calculator.g4"
+    "antlr4ts": "antlr4ts -visitor -o ./src/GeneratedAntlr ./src/Calculator.g4 && mv ./src/GeneratedAntlr/src/* ./src/GeneratedAntlr",
+    "updateDemo": "cp ./dist/bundles/antlrCalc.* ./demo/dist/bundles/",
+    "launch": "npx serve -s ./demo",
+    "fullBuild": "npm run antlr4ts && npm run build && npm run updateDemo && echo built and demo updated!!!",
+    "end2end": "npm run fullBuild && npm run launch"
   },
   "dependencies": {
     "antlr4ts": "0.5.0-alpha.4"
@@ -22,7 +26,7 @@
   "devDependencies": {
     "@types/jasmine": "3.5.11",
     "antlr4ts-cli": "0.5.0-alpha.4",
-    "karma": "~6.3.16",
+    "karma": "^1.7.1",
     "karma-chrome-launcher": "~3.1.0",
     "karma-coverage-istanbul-reporter": "~3.0.2",
     "karma-html-reporter": "0.2.7",
@@ -32,7 +36,8 @@
     "karma-typescript": "5.0.3",
     "terser-webpack-plugin": "3.0.6",
     "ts-loader": "8.0.1",
-    "typescript": "4.2.3",
+    "ts-node": "^10.9.1",
+    "typescript": "^3.9.10",
     "webpack": "^4.43.0",
     "webpack-cli": "3.3.12",
     "webpack-dev-server": "^3.11.2"

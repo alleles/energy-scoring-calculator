@@ -11,7 +11,6 @@ import { AbsContext } from "./CalculatorParser";
 import { RoundkContext } from "./CalculatorParser";
 import { RoundContext } from "./CalculatorParser";
 import { TruncContext } from "./CalculatorParser";
-import { StringTokensContext } from "./CalculatorParser";
 import { SinContext } from "./CalculatorParser";
 import { CosContext } from "./CalculatorParser";
 import { TanContext } from "./CalculatorParser";
@@ -44,6 +43,8 @@ import { MultContext } from "./CalculatorParser";
 import { MinContext } from "./CalculatorParser";
 import { MaxContext } from "./CalculatorParser";
 import { AddSubContext } from "./CalculatorParser";
+import { StringExpressionContext } from "./CalculatorParser";
+import { StringTokenContext } from "./CalculatorParser";
 import { NumberContext } from "./CalculatorParser";
 import { PiContext } from "./CalculatorParser";
 import { EulerContext } from "./CalculatorParser";
@@ -125,14 +126,6 @@ export interface CalculatorVisitor<Result> extends ParseTreeVisitor<Result> {
 	 * @return the visitor result
 	 */
 	visitTrunc?: (ctx: TruncContext) => Result;
-
-	/**
-	 * Visit a parse tree produced by the `StringTokens`
-	 * labeled alternative in `CalculatorParser.expression`.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	visitStringTokens?: (ctx: StringTokensContext) => Result;
 
 	/**
 	 * Visit a parse tree produced by the `Sin`
@@ -389,6 +382,22 @@ export interface CalculatorVisitor<Result> extends ParseTreeVisitor<Result> {
 	 * @return the visitor result
 	 */
 	visitAddSub?: (ctx: AddSubContext) => Result;
+
+	/**
+	 * Visit a parse tree produced by the `StringExpression`
+	 * labeled alternative in `CalculatorParser.expression`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitStringExpression?: (ctx: StringExpressionContext) => Result;
+
+	/**
+	 * Visit a parse tree produced by the `StringToken`
+	 * labeled alternative in `CalculatorParser.expression`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitStringToken?: (ctx: StringTokenContext) => Result;
 
 	/**
 	 * Visit a parse tree produced by the `Number`

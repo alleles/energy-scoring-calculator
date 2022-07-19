@@ -261,7 +261,7 @@ describe('Calculator',
 
         describe('with correct formulas:',
             () => {
-                var expectations: { formula: string | null, expectedResult: number; } | null;
+                var expectations: { formula: string | null, expectedResult: number | string; } | null;
 
                 beforeEach(() => {
                     expectations = null;
@@ -275,16 +275,23 @@ describe('Calculator',
                         expect(calculationResult.isValid).toBeTruthy(calculationResult.errorMessage);
                         expect(calculationResult.errorPosition).toBeNull();
                         expect(calculationResult.errorMessage).toBeNull();
-                        if (calculationResult.result > 1e300) {
-                            // The 0.99 * Number.MAX_VALUE test isn't getting that close==)
-                            if (expectations.expectedResult !== 0) {
-                                var relation = Math.abs(expectations.expectedResult / calculationResult.result);
-                                expect(relation).toBeCloseTo(1);
-                            } else {
-                                fail();
-                            }
+                        if (expectations.expectedResult as String) {
+                          // handle these cases in EnergyCalculator.spec.ts
+
                         } else {
-                            expect(calculationResult.result).toBeCloseTo(expectations.expectedResult, 1);
+                            const expectedResult = <number>expectations.expectedResult;
+                            const result = <number>calculationResult.result;
+                            if (calculationResult.result > 1e300) {
+                              // The 0.99 * Number.MAX_VALUE test isn't getting that close==)
+                                if (expectations.expectedResult !== 0) {
+                                    var relation = Math.abs(expectedResult / result);
+                                    expect(relation).toBeCloseTo(1);
+                                } else {
+                                    fail();
+                                }
+                            } else {
+                                expect(calculationResult.result).toBeCloseTo(expectedResult, 1);
+                            }
                         }
                     }
                 });
