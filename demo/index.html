@@ -21,8 +21,31 @@
     <script type="text/javascript" src="dist/bundles/antlrCalc.js"></script>
     <script type="text/javascript">
         function calculate() {
+            let failureText = null;
+            function substitutionFailed(sub) {
+                failureText = `${sub} failed to parse`;
+            }
+            let substitutionResolver = substitution => {
+                try {
+                    switch (substitution) {
+                        case "#moving_average":
+                        case "#ma":
+                          return 2;
+                        case "#behavioral_kWh":
+                        case "#bkWh":
+                          return 3;
+                        case "#total_kWh":
+                        case "#tkWh":
+                          return 4;
+                        default:
+                          substitutionFailed(substitution);
+                    }
+                } catch (e) {
+                }
+            }
+
             var formula = document.getElementById('formulaInput').value;
-            var result = antlrCalc.Calculator.calculate(formula);
+            var result = antlrCalc.Calculator.calculate(formula, substitutionResolver);
             document.getElementById('resultHeading').innerText = 'Result: ' + result.result;
             document.getElementById('resultJson').innerText = JSON.stringify(result, null, 2);
             if (!result.isValid) {

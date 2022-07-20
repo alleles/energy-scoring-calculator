@@ -1,2 +1,2 @@
-﻿export * from './Calculator';
-export * from './CalculationResult';
+﻿export {Calculator} from './Calculator';
+export {CalculationResult} from './CalculationResult';
